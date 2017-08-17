@@ -1,0 +1,7 @@
+{
+  "name": "user-account",
+  "short_name": "user-account",
+  "description": "User and Profile details",
+  "start_url": "/",
+  "display": "standalone"
+}

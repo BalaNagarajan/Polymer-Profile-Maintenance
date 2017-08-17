@@ -1,0 +1,22 @@
+{   "en": 
+		{ 
+			"subheader":"Account_en",
+			"firstname":"FIRST NAME",
+			"firstnameerror":"First name invalid_en",
+			"lastname":"LAST NAME",
+			"submittext":"Submit_en",
+			"uploadimagedescription":"Upload your Profile image_en.",
+			
+			"lastnameerror":"Last name invalid_en"
+		},    
+	"es": 
+		{        
+			"subheader":"Account_es",
+			"firstname":"First name_es",
+			"lastname":"Last name_es",
+			"submittext": "Submit_es",
+			"uploadimagedescription":"Upload your Profile image_es.",
+			"firstnameerror":"First name invalid_es",
+			"lastnameerror":"Last name invalid_es"
+		}
+}

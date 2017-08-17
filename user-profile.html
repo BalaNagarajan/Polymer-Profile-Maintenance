@@ -1,0 +1,161 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<dom-module id="user-profile">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2><u>Profile</u></h2>
+     <div>
+     <paper-input id="firstName" value="{{profileObj.firstName}}"  label="{{localize('firstname')}}"  bind-value="{{profileObj.firstName}}"  label="First Name"  required maxlength="12"></paper-input>
+     <paper-input id="lastName" value="{{profileObj.lastName}}" bind-value="{{profileObj.lastName}}" label="Last Name"  maxlength="12"></paper-input>
+     <paper-input id="email" value="{{profileObj.email}}"  bind-value="{{profileObj.email}}" label="Email" required ></paper-input>
+     <paper-input id="phone" value="{{profileObj.phone}}" bind-value="{{profileObj.phone}}" label="Phone"   maxlength="12">
+     </paper-input>
+      </div>
+     <div>
+        <paper-button id="create" on-click="createProfile">Create</paper-button>
+        <paper-button id="retreive" on-click="getProfile">Get</paper-button>
+        <paper-button id="update" on-click="updateProfile">Update</paper-button>
+        <paper-button id="delete" on-click="deleteProfile">Delete</paper-button>
+     </div>
+
+
+     <iron-ajax
+       id="createProfile"
+       method="post"
+       url="http://localhost:5000/api/profiles/v1/profile"
+       body="{{profileObj}}"
+       handle-as="json"
+       content-type="application/json"
+       on-response="handleResponse"
+       on-error="handleCancel"
+       headers:
+     >
+     </iron-ajax>
+
+     <iron-ajax
+       id="getProfile"
+       method="get"
+       url="http://localhost:5000/api/profiles/v1/profile/1234"
+       body="{{profileObj}}"
+       handle-as="json"
+       content-type="application/json"
+       on-response="handleGetProfile"
+       on-error="handleCancel"
+       
+     >
+     </iron-ajax>
+
+     <iron-ajax
+       id="updateProfile"
+       method="put"
+       url="http://localhost:5000/api/profiles/v1/profile/5467"
+       body="{{profileObj}}"
+       handle-as="json"
+       content-type="application/json"
+       on-response="handleResponse"
+       on-error="handleCancel"
+       headers:
+     >
+     </iron-ajax>
+
+     <iron-ajax
+       id="deleteProfile"
+       method="delete"
+       url="http://localhost:5000/api/profiles/v1/profile/897"
+       body="{{profileObj}}"
+       handle-as="json"
+       content-type="application/json"
+       on-response="handleResponse"
+       on-error="handleCancel"
+       headers:
+     >
+     </iron-ajax>
+
+
+
+
+  </template>
+
+  <script>
+    /**
+     * Contains the Profile related informations
+     * @customElement
+     * @polymer
+     */
+    class UserProfile extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element)  {
+      static get is() { return 'user-profile'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'User-Profile'
+          },
+           language: {value: 'en'},
+          //for localization
+          resources:{
+                      value() {
+                        var userProfileLocale = this.loadResources(this.resolveUrl('user-profile-locale.json'));            
+                        return userProfileLocale;
+                      }
+                    },
+
+          profileObj : {type:Object, value:{"firstName":"","lastName":"","email":"","phone":""}}
+
+        };
+      }
+
+        //Add all Javascript functions
+        createProfile() {
+          console.log("---Form Submitted---");
+          this.$.createProfile.generateRequest();
+        }
+
+         getProfile() {
+          console.log("---Form Submitted---");
+          this.$.getProfile.generateRequest();
+        }
+
+        handleGetProfile(responseEvent) {
+          this.profileObj = responseEvent.detail.response;
+          console.log(this.profileObj);
+        }
+
+         updateProfile() {
+          console.log("---Form Submitted---");
+          this.$.updateProfile.generateRequest();
+        }
+
+         deleteProfile() {
+          console.log("---Form Submitted---");
+          this.$.deleteProfile.generateRequest();
+        }
+
+
+        handleResponse() {
+         console.log("---Response Received---"); 
+         
+        }
+
+        handleCancel() {
+         console.log("---Request Cancelled---"); 
+        }
+
+
+
+
+
+    }
+
+    //Telling the browser to add this component
+    window.customElements.define(UserProfile.is, UserProfile);
+  </script>
+</dom-module>
